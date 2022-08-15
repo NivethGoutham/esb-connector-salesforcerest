@@ -48,7 +48,7 @@
         <property name="uri.var.username" expression="$func:username"/>
         <property name="uri.var.password" expression="$func:password"/>
         <property name="uri.var.tokenEndpointHostname" expression="$func:tokenEndpointHostname"/>
-        <property name="timeout" expression="$func:timeout"/>
+        <property name="uri.var.timeout" expression="$func:timeout"/>
         <property name="salesforceRestBlocking" expression="$func:blocking"/>
         <filter source="boolean($ctx:uri.var.tokenEndpointHostname)" regex="false">
             <then>
@@ -63,7 +63,7 @@
                 if (timeout == null || timeout == "") {
                     timeout = 3000;
                 }
-                mc.setProperty("timeout", timeout.toString());
+                mc.setProperty("uri.var.timeout", timeout.toString());
             ]]>
         </script>
         <filter source="boolean($ctx:uri.var.username) and boolean($ctx:uri.var.password) and boolean($ctx:uri.var.clientSecret) and boolean($ctx:uri.var.clientId)"
@@ -87,7 +87,7 @@
                                 <http method="post"
                                       uri-template="{uri.var.hostName}/services/oauth2/token?grant_type=password&amp;client_id={uri.var.clientId}&amp;client_secret={uri.var.clientSecret}&amp;username={uri.var.username}&amp;password={uri.var.password}">
                                     <timeout>
-                                        <duration>{$ctx:timeout}</duration>
+                                        <duration>{$ctx:uri.var.timeout}</duration>
                                         <responseAction>fault</responseAction>
                                     </timeout>
                                     <suspendOnFailure>
@@ -107,7 +107,7 @@
                                 <http method="post"
                                       uri-template="{uri.var.hostName}/services/oauth2/token?grant_type=password&amp;client_id={uri.var.clientId}&amp;client_secret={uri.var.clientSecret}&amp;username={uri.var.username}&amp;password={uri.var.password}">
                                     <timeout>
-                                        <duration>{$ctx:timeout}</duration>
+                                        <duration>{$ctx:uri.var.timeout}</duration>
                                         <responseAction>fault</responseAction>
                                     </timeout>
                                     <suspendOnFailure>
